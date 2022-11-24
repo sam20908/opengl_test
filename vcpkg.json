@@ -1,0 +1,26 @@
+{
+  "name": "avatar-cam",
+  "version-string": "4.0.0",
+  "description": "Avatar Cam",
+  "dependencies": [
+    {
+      "name": "imgui",
+      "platform": "x64",
+      "default-features": false,
+      "features": ["sdl2-binding", "opengl3-binding", "docking-experimental"]
+    },
+    {
+      "name": "sdl2",
+      "platform": "x64"
+    },
+    {
+      "name": "glad",
+      "platform": "x64",
+      "features": ["gl-api-33"]
+    },
+    {
+      "name": "glm",
+      "platform": "x64"
+    }
+  ]
+}
