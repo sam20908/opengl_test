@@ -1,10 +1,14 @@
-#include "header.pch"
+#include <dwmapi.h>
+
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_opengl.h>
+#include <SDL2/SDL_syswm.h>
 
 namespace {
 // use OpenGL 3.3
-static constexpr int GL_MAJOR = 3;
-static constexpr int GL_MINOR = 3;
-static constexpr const char *GLSL_VERSION = "#version 330";
+// static constexpr int GL_MAJOR = 3;
+// static constexpr int GL_MINOR = 3;
+// static constexpr const char *GLSL_VERSION = "#version 330";
 } // namespace
 
 #undef main
