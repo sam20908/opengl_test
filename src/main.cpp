@@ -1,14 +1,16 @@
 #include <dwmapi.h>
 
+#include <iostream>
+
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_opengl.h>
 #include <SDL2/SDL_syswm.h>
 
 namespace {
 // use OpenGL 3.3
-// static constexpr int GL_MAJOR = 3;
-// static constexpr int GL_MINOR = 3;
-// static constexpr const char *GLSL_VERSION = "#version 330";
+static constexpr int GL_MAJOR = 3;
+static constexpr int GL_MINOR = 3;
+static constexpr const char *GLSL_VERSION = "#version 330";
 } // namespace
 
 #undef main
@@ -17,13 +19,14 @@ int main(HINSTANCE, HINSTANCE, PSTR, int) {
   SDL_Init(SDL_INIT_VIDEO);
 
   // note: do this after SDL_Init
-  // SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, 0);
-  // SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
-  // SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, GL_MAJOR);
-  // SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, GL_MINOR);
-  // SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-  // SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
-  // SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
+  SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, 0);
+  SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+  SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, GL_MAJOR);
+  SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, GL_MINOR);
+  SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+  SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
+  SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
+  SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE, 8);
 
   const auto window =
       SDL_CreateWindow("Test", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 600, 600, SDL_WINDOW_OPENGL);
@@ -41,7 +44,9 @@ int main(HINSTANCE, HINSTANCE, PSTR, int) {
   // make window transparent
   MARGINS margins = {-1};
   SetWindowLong(info.info.win.window, GWL_STYLE, WS_POPUP | WS_VISIBLE);
-  DwmExtendFrameIntoClientArea(info.info.win.window, &margins);
+  if (FAILED(DwmExtendFrameIntoClientArea(info.info.win.window, &margins))) {
+    throw;
+  }
 
   // load OpenGL 3.3 functions
   // gladLoadGLLoader(SDL_GL_GetProcAddress);
